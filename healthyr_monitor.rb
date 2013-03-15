@@ -1,5 +1,16 @@
 class HealthyrMonitor < Sinatra::Base
   configure do
-    Mongoid.load!(APP_ROOT.join("config/mongoid.yml"), settings.environment)
+    Application.establish_connection
+  end
+
+  post "/events" do
+    data = JSON.parse(params['data'])
+    from = data['from']
+    events = data['events']
+
+    events.each do |event|
+      event.merge!('instance_id' => from)
+      HealthyrEvent.create(event)
+    end
   end
 end
