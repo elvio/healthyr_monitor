@@ -1,0 +1,13 @@
+development:
+  sessions:
+    default:
+      database: healthyr
+      hosts:
+        - localhost:27017
+
+test:
+  sessions:
+    default:
+      database: healthyr_test
+      hosts:
+        - localhost:27017
