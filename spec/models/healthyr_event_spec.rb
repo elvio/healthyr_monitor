@@ -11,6 +11,16 @@ describe "HealthyrEvent" do
     end
   end
 
+  describe ".period" do
+    it "filters by events in a give period of minutes" do
+      event1 = HealthyrEvent.create(reported_at: 30.minutes.ago)
+      event2 = HealthyrEvent.create(reported_at: 1.hour.ago)
+      event3 = HealthyrEvent.create(reported_at: 2.hours.ago)
+
+      HealthyrEvent.period(65.minutes.ago).to_a.should == [event1, event2]
+    end
+  end
+
   describe "scopes by name" do
     let(:database)   { HealthyrEvent.create(name: "database") }
     let(:view)       { HealthyrEvent.create(name: "view") }

@@ -27,6 +27,10 @@ StatsTable.prototype.__update = function() {
 var Updater = function() {
   this.isPlotted = false;
   this.options = {
+    legend: {
+      show: true
+    },
+
     series: {
       shadowSize: 0
     },
@@ -36,8 +40,7 @@ var Updater = function() {
 
     xaxis: {
       mode: "time",
-      minTickSize: [1, "hour"],
-      timeformat: "%H:%I:%S"
+      timeformat: "%H:%M:%S"
     }
   }
 
@@ -63,7 +66,7 @@ Updater.prototype.updateStats = function(response) {
 Updater.prototype.update = function() {
   var self = this;
 
-  $.get("/events", function(response) {
+  $.get("/events", { period: window.healthyr.period }, function(response) {
     self.updateChart(response);
     self.updateStats(response);
   });

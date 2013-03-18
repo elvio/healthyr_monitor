@@ -10,16 +10,18 @@ class HealthyrMonitor < Sinatra::Base
   get "/events" do
     content_type :json
 
+    period = (params[:period].to_i || 15).minutes.ago
+
     slowest_stats = SlowestStat.new(
-      HealthyrEvent.slowest.database.limit(5),
-      HealthyrEvent.slowest.view.limit(5),
-      HealthyrEvent.slowest.controller.limit(5)
+      HealthyrEvent.slowest.database.period(period).limit(5),
+      HealthyrEvent.slowest.view.period(period).limit(5),
+      HealthyrEvent.slowest.controller.period(period).limit(5)
     ).stats
 
     chart_data = ChartData.new(
-      HealthyrEvent.database.sort({reported_at: 1}),
-      HealthyrEvent.view.sort({reported_at: 1}),
-      HealthyrEvent.controller.sort({reported_at: 1})
+      HealthyrEvent.database.period(period).sort({reported_at: 1}),
+      HealthyrEvent.view.period(period).sort({reported_at: 1}),
+      HealthyrEvent.controller.period(period).sort({reported_at: 1})
     ).data
 
     {

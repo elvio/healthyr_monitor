@@ -11,4 +11,5 @@ class HealthyrEvent
   scope :database, where(name: "database")
   scope :view, where(name: "view")
   scope :controller, where(name: "controller")
+  scope :period, ->(period) { where(:reported_at.gte => period) }
 end

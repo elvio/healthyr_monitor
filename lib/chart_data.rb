@@ -27,7 +27,7 @@ class ChartData
   def average_by_time(type)
     @times[type] = {}
     send(type).each do |event|
-      time = event.reported_at.to_i
+      time = event.reported_at.to_i * 1000
       total = event.time['total']
       if @times[type][time]
         @times[type][time] << total
