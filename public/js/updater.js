@@ -1,3 +1,29 @@
+var StatsTable = function(data, elementId, timeFields) {
+  this.data = data;
+  this.table = $("#" + elementId);
+  this.timeFields = timeFields;
+
+  this.__update();
+};
+
+StatsTable.prototype.__update = function() {
+  this.table.find("tr").not(".header").remove();
+
+  for (var i=0; i < this.data.length; i++) {
+    var stat = this.data[i];
+    var tr = $("<tr></tr>");
+
+    tr.append($("<td></td>").html(stat.value));
+    for (var j=0; j < this.timeFields.length; j++) {
+      var field = this.timeFields[j];
+      tr.append($("<td></td>").html(stat.time[field]));
+    }
+    tr.append($("<td></td>").html(stat.time.total));
+    tr.append($("<td></td>").html(stat.reported_at));
+    this.table.append(tr);
+  }
+}
+
 var Updater = function() {
   this.isPlotted = false;
   this.options = {
@@ -29,44 +55,9 @@ Updater.prototype.updateChart = function(response) {
 
 Updater.prototype.updateStats = function(response) {
   var stats = response.slowestStats;
-
-  var table = $("#slowest_database");
-  table.find("tr").not(".header").remove();
-
-  for (var i=0; i < stats.database.length; i++) {
-    var stat = stats.database[i];
-    var tr = $("<tr></tr>");
-    tr.append($("<td></td>").html(stat.value));
-    tr.append($("<td></td>").html(stat.time.total));
-    tr.append($("<td></td>").html(stat.reported_at));
-    table.append(tr);
-  }
-
-  table = $("#slowest_view");
-  table.find("tr").not(".header").remove();
-
-  for (var i=0; i < stats.view.length; i++) {
-    var stat = stats.view[i];
-    var tr = $("<tr></tr>");
-    tr.append($("<td></td>").html(stat.value));
-    tr.append($("<td></td>").html(stat.time.total));
-    tr.append($("<td></td>").html(stat.reported_at));
-    table.append(tr);
-  }
-
-  table = $("#slowest_controller");
-  table.find("tr").not(".header").remove();
-
-  for (var i=0; i < stats.controller.length; i++) {
-    var stat = stats.controller[i];
-    var tr = $("<tr></tr>");
-    tr.append($("<td></td>").html(stat.value));
-    tr.append($("<td></td>").html(stat.time.db));
-    tr.append($("<td></td>").html(stat.time.view));
-    tr.append($("<td></td>").html(stat.time.total));
-    tr.append($("<td></td>").html(stat.reported_at));
-    table.append(tr);
-  }
+  var database = new StatsTable(stats.database, "slowest_database", []);
+  var view = new StatsTable(stats.view, "slowest_view", []);
+  var controller = new StatsTable(stats.controller, "slowest_controller", ['db', 'view']);
 };
 
 Updater.prototype.update = function() {
