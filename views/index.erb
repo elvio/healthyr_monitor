@@ -58,62 +58,38 @@
       </div>
 
       <div class="row">
-        <div class="span12">
-          <h2>Slowest database queries</h2>
-          <table class="table">
-            <tr>
+        <div id="database" class="span12">
+          <h2>Database</h2>
+          <table id="slowest_database" class="table">
+            <tr class="header">
               <th>SQL</th>
               <th>Duration</th>
               <th>Reported at</th>
             </tr>
-
-            <% @database_queries.each do |e| %>
-              <tr>
-                <td><a href="/events/<%= e.id %>"><%= e.value %></a></td>
-                <td><%= e.time['total'] %></td>
-                <td><%= e.reported_at %></td>
-              </tr>
-            <% end %>
           </table>
         </div>
 
-        <div class="span12">
-          <h2>Slowest view templates rendering</h2>
-          <table class="table">
-            <tr>
-              <th>File</th>
+        <div id="view" class="span12">
+          <h2>View</h2>
+          <table id="slowest_view" class="table">
+            <tr class="header">
+              <th>Template</th>
               <th>Duration</th>
               <th>Reported at</th>
             </tr>
-            <% @view_templates.each do |q| %>
-              <tr>
-                <td><a href="#"><%= q.value %></a></td>
-                <td><%= q.time['total'] %></td>
-                <td><%= q.reported_at %></td>
-              </tr>
-            <% end %>
           </table>
         </div>
 
-        <div class="span12">
-          <h2>Slowest controller actions</h2>
-          <table class="table">
-            <tr>
+        <div id="controller" class="span12">
+          <h2>Controller</h2>
+          <table id="slowest_controller" class="table">
+            <tr class="header">
               <th>Controller#Action</th>
-              <th>Spend on database</th>
-              <th>Spent on view</th>
+              <th>Database</th>
+              <th>View</th>
               <th>Duration</th>
               <th>Reported at</th>
             </tr>
-            <% @controller_actions.each do |q| %>
-              <tr>
-                <td><a href="#"><%= q.value %></a></td>
-                <td><%= q.time['db'] %></td>
-                <td><%= q.time['view'] %></td>
-                <td><%= q.time['total'] %></td>
-                <td><%= q.reported_at %></td>
-              </tr>
-            <% end %>
           </table>
         </div>
       </div>

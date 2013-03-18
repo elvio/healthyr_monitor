@@ -5,6 +5,8 @@ require "json"
 require "sinatra"
 require "mongoid"
 
+require "./lib/chart_data"
+require "./lib/slowest_stat"
 require "./models/healthyr_event"
 
 APP_ROOT = Pathname.new(File.dirname(__FILE__))
