@@ -9,6 +9,12 @@ class HealthyrMonitor < Sinatra::Base
     @action = request.path_info.gsub("/", "")
   end
 
+  helpers do
+    def period_of(period)
+      "#{request.path}?period=#{period.to_i}"
+    end
+  end
+
   get "/" do
     erb :index
   end

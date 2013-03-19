@@ -13,6 +13,18 @@
           <li class="<%= "active" if @action == "database" %>"><a href="/database">Database</a></li>
           <li class="<%= "active" if @action == "view" %>"><a href="/view">View</a></li>
           <li class="<%= "active" if @action == "controller" %>"><a href="/controller">Controller</a></li>
+
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Update Interval<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="<%= period_of(15.minutes) %>">15 minutes</a></li>
+              <li><a href="<%= period_of(1.hour) %>">1 hour</a></li>
+              <li><a href="<%= period_of(12.hours) %>">12 hours</a></li>
+              <li><a href="<%= period_of(7.days) %>">7 days</a></li>
+            </ul>
+          </li>
+
+
         </ul>
       </div><!--/.nav-collapse -->
     </div>
