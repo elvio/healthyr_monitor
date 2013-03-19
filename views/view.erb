@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%= erb :head %>
+
+  <body>
+    <%= erb :menu %>
+
+    <div class="container">
+      <%= erb :chart %>
+
+      <div class="row">
+        <div id="view" class="span12">
+          <h2>View</h2>
+          <table id="slowest_view" class="table">
+            <tr class="header">
+              <th>Template</th>
+              <th>Duration</th>
+              <th>Reported at</th>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div> <!-- /container -->
+
+    <%= erb :scripts %>
+  </body>
+</html>

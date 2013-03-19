@@ -17,20 +17,22 @@ describe SlowestStat do
   let(:controller_time) { Hash['total' => 30, 'db' => '10', 'view' => 20] }
   let(:controller) { [create_event(action, controller_time)] }
 
+  let(:reported_at) { Time.at(1).to_datetime }
+
   subject { SlowestStat.new(database, view, controller).stats }
 
   it "creates the stats" do
     subject.should == {
       database: [
-        value: sql, time: database_time, reported_at: 1
+        value: sql, time: database_time, reported_at: reported_at
       ],
 
       view: [
-        value: view_path, time: view_time, reported_at: 1
+        value: view_path, time: view_time, reported_at: reported_at
       ],
 
       controller: [
-        value: action, time: controller_time, reported_at: 1
+        value: action, time: controller_time, reported_at: reported_at
       ]
     }
   end

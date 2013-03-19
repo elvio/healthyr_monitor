@@ -3,25 +3,46 @@ class HealthyrMonitor < Sinatra::Base
     Application.establish_connection
   end
 
+  before do
+    @period = (params[:period] || 15).to_i.minutes.ago
+    @limit = (params[:limit] || 5).to_i
+    @action = request.path_info.gsub("/", "")
+  end
+
   get "/" do
     erb :index
+  end
+
+  get "/database" do
+    erb :database
+  end
+
+  get "/view" do
+    erb :view
+  end
+
+  get "/controller" do
+    erb :controller
   end
 
   get "/events" do
     content_type :json
 
-    period = (params[:period].to_i || 15).minutes.ago
+    if params[:filter]
+      @filter = {params[:filter].to_sym => true}
+    end
 
     slowest_stats = SlowestStat.new(
-      HealthyrEvent.slowest.database.period(period).limit(5),
-      HealthyrEvent.slowest.view.period(period).limit(5),
-      HealthyrEvent.slowest.controller.period(period).limit(5)
+      HealthyrEvent.slowest.database.period(@period).limit(@limit),
+      HealthyrEvent.slowest.view.period(@period).limit(@limit),
+      HealthyrEvent.slowest.controller.period(@period).limit(@limit)
     ).stats
 
     chart_data = ChartData.new(
-      HealthyrEvent.database.period(period).sort({reported_at: 1}),
-      HealthyrEvent.view.period(period).sort({reported_at: 1}),
-      HealthyrEvent.controller.period(period).sort({reported_at: 1})
+      HealthyrEvent.database.period(@period).sort({reported_at: 1}),
+      HealthyrEvent.view.period(@period).sort({reported_at: 1}),
+      HealthyrEvent.controller.period(@period).sort({reported_at: 1}),
+      @filter
     ).data
 
     {

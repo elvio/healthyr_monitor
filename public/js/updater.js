@@ -65,8 +65,16 @@ Updater.prototype.updateStats = function(response) {
 
 Updater.prototype.update = function() {
   var self = this;
+  var params = {
+    period: window.healthyr.period,
+    limit: window.healthyr.limit
+  }
 
-  $.get("/events", { period: window.healthyr.period }, function(response) {
+  if (window.healthyr.action) {
+    params.filter = window.healthyr.action;
+  }
+
+  $.get("/events", params, function(response) {
     self.updateChart(response);
     self.updateStats(response);
   });

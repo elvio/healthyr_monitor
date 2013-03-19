@@ -1,0 +1,20 @@
+<div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="brand" href="/">Healthyr</a>
+      <div class="nav-collapse collapse">
+        <ul class="nav">
+          <li class="<%= "active" if @action.blank? %>"><a href="/">Dashboard</a></li>
+          <li class="<%= "active" if @action == "database" %>"><a href="/database">Database</a></li>
+          <li class="<%= "active" if @action == "view" %>"><a href="/view">View</a></li>
+          <li class="<%= "active" if @action == "controller" %>"><a href="/controller">Controller</a></li>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
+</div>

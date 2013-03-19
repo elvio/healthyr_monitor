@@ -1,21 +1,31 @@
 class ChartData
   attr_accessor :database, :view, :controller
 
-  def initialize(database, view, controller)
+  def initialize(database, view, controller, filters = nil)
     @database = database
     @view = view
     @controller = controller
     @times = {}
+    @filters = filters
   end
 
   def data
-    [data_for(:database), data_for(:view), data_for(:controller)]
-  end
-
-  def options
+    if filtering?
+      [].tap do |d|
+        d << data_for(:database)   if @filters[:database]
+        d << data_for(:view)       if @filters[:view]
+        d << data_for(:controller) if @filters[:controller]
+      end
+    else
+      [:database, :view, :controller].map {|t| data_for(t)}
+    end
   end
 
   private
+
+  def filtering?
+    @filters.kind_of?(Hash)
+  end
 
   def data_for(type)
     {

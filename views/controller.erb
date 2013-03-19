@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <%= erb :head %>
+
   <body>
     <%= erb :menu %>
 
@@ -8,28 +9,6 @@
       <%= erb :chart %>
 
       <div class="row">
-        <div id="database" class="span12">
-          <h2>Database</h2>
-          <table id="slowest_database" class="table">
-            <tr class="header">
-              <th>SQL</th>
-              <th>Duration</th>
-              <th>Reported at</th>
-            </tr>
-          </table>
-        </div>
-
-        <div id="view" class="span12">
-          <h2>View</h2>
-          <table id="slowest_view" class="table">
-            <tr class="header">
-              <th>Template</th>
-              <th>Duration</th>
-              <th>Reported at</th>
-            </tr>
-          </table>
-        </div>
-
         <div id="controller" class="span12">
           <h2>Controller</h2>
           <table id="slowest_controller" class="table">

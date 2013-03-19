@@ -1,0 +1,12 @@
+<script>
+  window.healthyr = {
+    period: <%= (params[:period] || 15) %>,
+    limit: <%= ['database', 'view', 'controller'].include?(@action) ? 50 : 5 %>,
+    action: "<%= @action %>"
+  };
+</script>
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.flot.js"></script>
+<script src="/js/updater.js"></script>
