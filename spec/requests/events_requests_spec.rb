@@ -5,10 +5,6 @@ describe 'events requests' do
     HealthyrMonitor
   end
 
-  before do
-    HealthyrEvent.delete_all
-  end
-
   describe "POST /events" do
     let(:instance_id) { "host-222" }
     let(:time) { Hash['total' => 10] }

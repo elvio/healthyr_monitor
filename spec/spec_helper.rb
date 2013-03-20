@@ -1,10 +1,10 @@
 $: << File.join(File.dirname(__FILE__), "../")
 
+ENV["RACK_ENV"] = "test"
+
 require "application"
 require "healthyr_monitor"
 require "rack/test"
-
-ENV["RACK_ENV"] = "test"
 
 RSpec.configure do |c|
   c.include Rack::Test::Methods

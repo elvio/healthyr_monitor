@@ -66,5 +66,7 @@ class HealthyrMonitor < Sinatra::Base
       event.merge!('instance_id' => from)
       HealthyrEvent.create(event)
     end
+
+    ""
   end
 end
